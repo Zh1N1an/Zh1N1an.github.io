@@ -21,12 +21,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '7.5.0',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -54,13 +54,13 @@
   <meta name="description" content="没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="执念的博客">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;11&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;categories&#x2F;C-C&#x2F;%E8%93%9D%E6%A1%A5%E6%9D%AF&#x2F;index.html">
 <meta property="og:site_name" content="执念的博客">
 <meta property="og:description" content="没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/11/">
+<link rel="canonical" href="http://yoursite.com/categories/C-C/%E8%93%9D%E6%A1%A5%E6%9D%AF/">
 
 
 <script id="page-configurations">
@@ -70,11 +70,11 @@
     isHome: false,
     isPost: false,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | 执念的博客</title>
+  <title>分类: 蓝桥杯 | 执念的博客</title>
   
 
 
@@ -143,6 +143,21 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
@@ -175,7 +190,9 @@
   <div class="post-block">
     <div class="posts-collapse">
       <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 1 篇日志。 继续努力。</span>
+        <h1 class="collection-header">蓝桥杯
+          <small>分类</small>
+        </h1>
       </div>
 
       
@@ -188,21 +205,60 @@
 
       <div class="post-meta">
         <time itemprop="dateCreated"
-              datetime="2019-11-08T12:38:40+08:00"
-              content="2019-11-08">
-          11-08
+              datetime="2019-03-25T23:13:45+08:00"
+              content="2019-03-25">
+          03-25
         </time>
       </div>
 
       <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/08/hello-world/" itemprop="url">
-            <span itemprop="name">Hello World</span>
+          <a class="post-title-link" href="/2019/03/25/%E8%93%9D%E6%A1%A5%E6%9D%AF/" itemprop="url">
+            <span itemprop="name">蓝桥杯</span>
           </a>
       </h2>
 
     </header>
   </article>
 
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2019-03-25T16:59:27+08:00"
+              content="2019-03-25">
+          03-25
+        </time>
+      </div>
+
+      <h2 class="post-title">
+          <a class="post-title-link" href="/2019/03/25/%E5%85%AB%E7%9A%87%E5%90%8E%E9%97%AE%E9%A2%98/" itemprop="url">
+            <span itemprop="name">八皇后问题</span>
+          </a>
+      </h2>
+
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2019-03-19T13:20:46+08:00"
+              content="2019-03-19">
+          03-19
+        </time>
+      </div>
+
+      <h2 class="post-title">
+          <a class="post-title-link" href="/2019/03/19/%E5%85%B3%E4%BA%8E%E5%B9%B2%E6%8E%89%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9E%E7%BB%AD%E6%9C%AB%E5%B0%BE1or%E5%8D%95%E4%B8%AA%E6%9C%AB%E5%B0%BE1/" itemprop="url">
+            <span itemprop="name">关于干掉二进制连续末尾1or单个末尾1</span>
+          </a>
+      </h2>
+
+    </header>
+  </article>
 
     </div>
   </div>
@@ -246,7 +302,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <img class="site-author-image" itemprop="image" alt="执灬念"
-    src="/images/avatar.gif">
+    src="/head/avatar.JPG">
   <p class="site-author-name" itemprop="name">执灬念</p>
   <div class="site-description" itemprop="description">没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。</div>
 </div>
@@ -255,9 +311,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -285,18 +353,13 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2017 – 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">执灬念</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
-  </div>
 
         
 
@@ -317,11 +380,13 @@
   </div>
 
   
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 <script src="/js/next-boot.js"></script>
 
 

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="执念的博客" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="今天在解决2013 蓝桥省赛 A组 第四题的时候，发现了讲解视频在用 vector 而我们上课却没有学过这个，所以特从别的地方摘抄了这么一个用法去学习，转自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;aminxu&#x2F;p&#x2F;4686332.html">
+<meta name="keywords" content="C&#x2F;C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++中的vector使用详细说明">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;03&#x2F;28&#x2F;C-%E4%B8%AD%E7%9A%84vector%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E&#x2F;index.html">
+<meta property="og:site_name" content="执念的博客">
+<meta property="og:description" content="今天在解决2013 蓝桥省赛 A组 第四题的时候，发现了讲解视频在用 vector 而我们上课却没有学过这个，所以特从别的地方摘抄了这么一个用法去学习，转自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;aminxu&#x2F;p&#x2F;4686332.html">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-08T05:46:01.302Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/03/28/C-%E4%B8%AD%E7%9A%84vector%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>C++中的vector使用详细说明 | 执念的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">执念的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">程序猿的杂文 </p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/C-%E4%B8%AD%E7%9A%84vector%E4%BD%BF%E7%94%A8%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head/avatar.JPG">
+      <meta itemprop="name" content="执灬念">
+      <meta itemprop="description" content="没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="执念的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++中的vector使用详细说明
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-28 10:39:51" itemprop="dateCreated datePublished" datetime="2019-03-28T10:39:51+08:00">2019-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-08 13:46:01" itemprop="dateModified" datetime="2019-11-08T13:46:01+08:00">2019-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/Vector/" itemprop="url" rel="index">
+                    <span itemprop="name">Vector</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天在解决2013 蓝桥省赛 A组 第四题的时候，发现了讲解视频在用 vector 而我们上课却没有学过这个，所以特从别的地方摘抄了这么一个用法去学习，转自 <a href="https://www.cnblogs.com/aminxu/p/4686332.html" target="_blank" rel="noopener">https://www.cnblogs.com/aminxu/p/4686332.html</a></p>
+<a id="more"></a>
+
+<ul>
+<li><p>一、向量的介绍</p>
+<p>向量 <code>vector</code> 是一种对象实体, 能够容纳许多其他类型相同的元素, 因此又被称为容器。 与<code>string</code>相同, <code>vector</code> 同属于STL(Standard Template Library, 标准模板库)中的一种自定义的数据类型, 可以广义上认为是数组的增强版。在使用它时, 需要包含头文件 <code>vector</code>, <code>#include&lt;vector&gt;</code>。vector容器与数组相比其优点在于它能够根据需要随时自动调整自身的大小以便容下所要放入的元素。此外, <code>vector</code> 也提供了许多的方法来对自身进行操作。</p>
+<!--more-->
+</li>
+<li><p><strong>二、向量的声明及初始化</strong></p>
+<pre><code>vector 型变量的声明以及初始化的形式也有许多, 常用的有以下几种形式：</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a ;                            <span class="comment">//声明一个int型向量</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(<span class="number">10</span>);                         <span class="comment">//声明一个初始大小为10的向量</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(<span class="number">10</span>, <span class="number">1</span>);                      <span class="comment">//声明一个初始大小为10且初始值都为1的向量</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; b(a);                          <span class="comment">//声明并用向量a初始化向量b</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; b(a.<span class="built_in">begin</span>(), a.<span class="built_in">begin</span>()+<span class="number">3</span>);     <span class="comment">//将a向量中从第0个到第2个(共3个)作为向量b的初始值</span></span><br></pre></td></tr></table></figure>
+
+<p>除此之外, 还可以直接使用数组来初始化向量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125; ;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(n, n+<span class="number">5</span>) ;              <span class="comment">//将数组n的前5个元素作为向量a的初值</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(&amp;n[<span class="number">1</span>], &amp;n[<span class="number">4</span>]) ;        <span class="comment">//将n[1] - n[4]范围内的元素作为向量a的初值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>三、元素的输入及访问</strong></p>
+<pre><code>元素的输入和访问可以像操作普通的数组那样, 用**cin&gt;&gt;**进行输入, **cout&lt;&lt;a[n]**这样进行输出:
+示例:：</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span> ;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(<span class="number">10</span>, <span class="number">0</span>) ;      <span class="comment">//大小为10初值为0的向量a</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//对其中部分元素进行输入</span></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt;a[<span class="number">2</span>] ;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt;a[<span class="number">5</span>] ;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt;a[<span class="number">6</span>] ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//全部输出</span></span><br><span class="line">    <span class="keyword">int</span> i ;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;a.<span class="built_in">size</span>(); i++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">" "</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在元素的输出上, 还可以使用遍历器(又称迭代器)进行输出控制。在 <strong>vector<int> b(a.begin(), a.begin()+3) ;</int></strong> 这种声明形式中, <strong>(a.begin()、a.begin()+3)</strong> 表示向量起始元素位置到起始元素+3之间的元素位置。(a.begin(), a.end())则表示起始元素和最后一个元素之外的元素位置。</p>
+<p>向量元素的位置便成为遍历器, 同时, 向量元素的位置也是一种数据类型, 在向量中遍历器的类型为: <strong>vector<int>::iterator</int></strong>。 遍历器不但表示元素位置, 还可以再容器中前后移动。</p>
+<p>在上例中讲元素全部输出部分的代码就可以改写为:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//全部输出</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator t ;</span><br><span class="line"><span class="keyword">for</span>(t=a.<span class="built_in">begin</span>(); t!=a.<span class="built_in">end</span>(); t++)</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;*t&lt;&lt;<span class="string">" "</span> ;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>*t</strong> 为指针的间接访问形式, 意思是访问t所指向的元素值</p>
+</li>
+<li><p><strong>四、向量的基本操作</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.<span class="built_in">size</span>()                 <span class="comment">//获取向量中的元素个数</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.empty()                <span class="comment">//判断向量是否为空</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.<span class="built_in">clear</span>()                <span class="comment">//清空向量中的元素</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">复制</span><br><span class="line">a = b ;            <span class="comment">//将b向量复制到a向量中</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比较</span><br><span class="line">保持 ==、!=、&gt;、&gt;=、&lt;、&lt;= 的惯有含义 ;</span><br><span class="line">如: a == b ;    <span class="comment">//a向量与b向量比较, 相等则返回1</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">插入 - insert</span><br><span class="line">a.insert(a.<span class="built_in">begin</span>(), <span class="number">1000</span>);            <span class="comment">//将1000插入到向量a的起始位置前</span></span><br><span class="line">    </span><br><span class="line">a.insert(a.<span class="built_in">begin</span>(), <span class="number">3</span>, <span class="number">1000</span>) ;        <span class="comment">//将1000分别插入到向量元素位置的0-2处(共3个元素)</span></span><br><span class="line">    </span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(<span class="number">5</span>, <span class="number">1</span>) ;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; b(<span class="number">10</span>) ;</span><br><span class="line">b.insert(b.<span class="built_in">begin</span>(), a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>()) ;        <span class="comment">//将a.begin(), a.end()之间的全部元素插入到b.begin()前</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">删除 - erase</span><br><span class="line">b.erase(b.<span class="built_in">begin</span>()) ;                     <span class="comment">//将起始位置的元素删除</span></span><br><span class="line">b.erase(b.<span class="built_in">begin</span>(), b.<span class="built_in">begin</span>()+<span class="number">3</span>) ;        <span class="comment">//将(b.begin(), b.begin()+3)之间的元素删除</span></span><br></pre></td></tr></table></figure>
+
+
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">交换 - swap</span><br><span class="line">b.swap(a) ;            <span class="comment">//a向量与b向量进行交换</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>五、二维向量</strong></p>
+<p>与数组相同, 向量也可以增加维数, 例如声明一个m*n大小的二维向量方式可以像如下形式:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt; <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; b(<span class="number">10</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>));        <span class="comment">//创建一个10*5的int型二维向量</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里, 实际上创建的是一个向量中元素为向量的向量。同样可以根据一维向量的相关特性对二维向量进行操作。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span> ;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt; <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; b(<span class="number">10</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>, <span class="number">0</span>)) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//对部分数据进行输入</span></span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;b[<span class="number">1</span>][<span class="number">1</span>] ;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;b[<span class="number">2</span>][<span class="number">2</span>] ;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;b[<span class="number">3</span>][<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//全部输出</span></span><br><span class="line">    <span class="keyword">int</span> m, n ;</span><br><span class="line">    <span class="keyword">for</span>(m=<span class="number">0</span>; m&lt;b.<span class="built_in">size</span>(); m++)           <span class="comment">//b.size()获取行向量的大小</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(n=<span class="number">0</span>; n&lt;b[m].<span class="built_in">size</span>(); n++)    <span class="comment">//获取向量中具体每个向量的大小</span></span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;b[m][n]&lt;&lt;<span class="string">" "</span> ;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"\n"</span> ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样, 按照这样的思路我们还可以创建更多维的向量, 不过维数太多会让向量变得难以灵活控制, 三维以上的向量还需酌情使用。</p>
+<hr>
+<ol>
+<li>在C++中的详细说明<br>vector是C++标准模板库中的部分内容，它是一个多功能的，能够操作多种数据结构和算法的模板类和函数库。<br>vector之所以被认为是一个容器，是因为它能够像容器一样存放各种类型的对象，<br>简单地说，vector是一个能够存放任意类型的动态数组，能够增加和压缩数据。</li>
+</ol>
+</li>
+</ul>
+<pre><code>2. 使用vector，
+
+必须在你的头文件中包含下面的代码：
+  `#include&lt;vector&gt;` </code></pre><p>  vector属于std命名域的，因此需要通过命名限定，如下完成你的代码：<br>  　　<code>using std::vector;</code><br>  　　<code>vector vInts;</code><br>  　　<br>  或者连在一起，使用全名：<br>      <code>std::vector vInts;</code><br>  　　<br>  建议使用全局的命名域方式：<br>      using namespace std;</p>
+<pre><code>3. 初始化   
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>                 <span class="comment">// 创建一个空的vector。</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span> <span class="title">c1</span><span class="params">(c2)</span>          <span class="comment">// 复制一个vector</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span> <span class="title">c</span><span class="params">(n)</span>            <span class="comment">// 创建一个vector，含有n个数据，数据均已缺省构造产生</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span> <span class="title">c</span><span class="params">(n, elem)</span>      <span class="comment">// 创建一个含有n个elem拷贝的vector</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span> <span class="title">c</span><span class="params">(beg,<span class="built_in">end</span>)</span>      <span class="comment">// 创建一个含有n个elem拷贝的vector</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+4. 析构函数
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.~<span class="built_in">vector</span> ()           <span class="comment">// 销毁所有数据，释放内存</span></span><br></pre></td></tr></table></figure>
+
+
+
+5. 成员函数
+
+`c.assign(beg,end)c.assign(n,elem)`
+　　将[beg; end)区间中的数据赋值给c。将n个elem的拷贝赋值给c。
+`c.at(idx)`
+　　传回索引idx所指的数据，如果idx越界，抛出out_of_range。</code></pre>  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">c.back()      <span class="comment">// 传回最后一个数据，不检查这个数据是否存在。</span></span><br><span class="line">c.<span class="built_in">begin</span>()     <span class="comment">// 传回迭代器中的第一个数据地址。</span></span><br><span class="line">c.capacity()  <span class="comment">// 返回容器中数据个数。</span></span><br><span class="line">c.<span class="built_in">clear</span>()     <span class="comment">// 移除容器中所有数据。</span></span><br><span class="line">c.empty()     <span class="comment">// 判断容器是否为空。</span></span><br><span class="line">c.<span class="built_in">end</span>()       <span class="comment">// 指向迭代器中末端元素的下一个，指向一个不存在元素。</span></span><br><span class="line">c.erase(pos)  <span class="comment">// 删除pos位置的数据，传回下一个数据的位置。</span></span><br><span class="line">c.erase(beg,<span class="built_in">end</span>)  <span class="comment">//删除[beg,end)区间的数据，传回下一个数据的位置。</span></span><br><span class="line">c.front()     <span class="comment">// 传回第一个数据。</span></span><br><span class="line"></span><br><span class="line">get_allocator <span class="comment">// 使用构造函数返回一个拷贝。</span></span><br><span class="line"></span><br><span class="line">c.insert(pos,elem)    <span class="comment">// 在pos位置插入一个elem拷贝，传回新数据位置。</span></span><br><span class="line">c.insert(pos,n,elem)  <span class="comment">// 在pos位置插入n个elem数据。无返回值。</span></span><br><span class="line">c.insert(pos,beg,<span class="built_in">end</span>) <span class="comment">// 在pos位置插入在[beg,end)区间的数据。无返回值。</span></span><br><span class="line">　　</span><br><span class="line">c.max_size()       <span class="comment">// 返回容器中最大数据的数量。</span></span><br><span class="line">c.pop_back()       <span class="comment">// 删除最后一个数据。</span></span><br><span class="line">c.push_back(elem)  <span class="comment">// 在尾部加入一个数据。</span></span><br><span class="line">c.rbegin()         <span class="comment">// 传回一个逆向队列的第一个数据。</span></span><br><span class="line">c.rend()           <span class="comment">// 传回一个逆向队列的最后一个数据的下一个位置。</span></span><br><span class="line">c.resize(num)      <span class="comment">// 重新指定队列的长度。</span></span><br><span class="line">c.reserve()        <span class="comment">// 保留适当的容量。</span></span><br><span class="line">c.<span class="built_in">size</span>()           <span class="comment">// 返回容器中实际数据的个数。</span></span><br><span class="line">c1.swap(c2)</span><br><span class="line">swap(c1,c2)        <span class="comment">// 将c1和c2元素互换。同上操作。</span></span><br><span class="line"><span class="keyword">operator</span>[]         <span class="comment">// 返回容器中指定位置的一个引用。</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>6. 用法示例：
+
+6.1. 创建一个vector
+vector容器提供了多种创建方法，下面介绍几种常用的。
+创建一个Widget类型的空的vector对象：
+　　`vector vWidgets;`
+
+创建一个包含500个Widget类型数据的vector：
+　　`vector vWidgets(500);`
+
+创建一个包含500个Widget类型数据的vector，并且都初始化为0：
+　　`v`ector vWidgets(500, Widget(0));　
+
+创建一个Widget的拷贝：
+　　`v`ector vWidgetsFromAnother(vWidgets);　　
+
+向vector添加一个数据
+
+​       vector添加数据的缺省方法是push_back()。
+       push_back()函数表示将数据添加到vector的尾部，并按需要来分配内存。
+
+例如：向vector中添加10个数据，需要如下编写代码：
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i= <span class="number">0</span>;i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">    vWidgets.push_back(Widget(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+6.2 获取vector中指定位置的数据
+
+vector里面的数据是动态分配的，使用push_back()的一系列分配空间常常决定于文件或一些数据源。
+
+如果想知道vector存放了多少数据，可以使用empty()。
+
+获取vector的大小，可以使用size()。
+
+例如，如果想获取一个vector v的大小，但不知道它是否为空，或者已经包含了数据，如果为空想设置为-1，
+
+你可以使用下面的代码实现：
+　　`int nSize = v.empty() ? -1 : static_cast(v.size());`
+
+6.3 访问vector中的数据
+
+使用两种方法来访问vector。
+
+1、 vector::at()
+
+2、 vector::operator[]
+
+operator[]主要是为了与C语言进行兼容。它可以像C语言数组一样操作。
+
+但at()是我们的首选，因为at()进行了边界检查，如果访问超过了vector的范围，将抛出一个例外。
+
+由于operator[]容易造成一些错误，所有我们很少用它，下面进行验证一下：
+　　分析下面的代码：
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span> v;</span><br><span class="line">    　　v.reserve(<span class="number">10</span>);</span><br><span class="line">    　　</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">7</span>; i++) &#123;</span><br><span class="line">    　　  v.push_back(i);</span><br><span class="line">    　　&#125;</span><br><span class="line">    　　</span><br><span class="line">        <span class="keyword">try</span> &#123;<span class="keyword">int</span> iVal1 = v[<span class="number">7</span>];</span><br><span class="line">    　　  <span class="comment">// not bounds checked - will not throw</span></span><br><span class="line">    　　  <span class="keyword">int</span> iVal2 = v.at(<span class="number">7</span>);</span><br><span class="line">    　　  <span class="comment">// bounds checked - will throw if out of range</span></span><br><span class="line">    　　&#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">catch</span>(<span class="keyword">const</span> exception&amp; e) &#123;</span><br><span class="line">    　　  <span class="built_in">cout</span> &lt;&lt; e.what();</span><br><span class="line">    　　&#125;</span><br></pre></td></tr></table></figure>
+
+　　6.3 删除vector中的数据
+
+vector能够非常容易地添加数据，也能很方便地取出数据，
+
+同样vector提供了erase()，pop_back()，clear()来删除数据，
+
+当删除数据时，应该知道要删除尾部的数据，或者是删除所有数据，还是个别的数据。
+
+Remove_if()算法 如果要使用remove_if()，需要在头文件中包含如下代码：：
+　　#include 
+
+Remove_if()有三个参数：
+
+1、 iterator _First：指向第一个数据的迭代指针。
+
+2、 iterator _Last：指向最后一个数据的迭代指针。
+
+3、 predicate _Pred：一个可以对迭代操作的条件函数。
+　　6.4 条件函数
+
+条件函数是一个按照用户定义的条件返回是或否的结果，是最基本的函数指针，或是一个函数对象。
+
+这个函数对象需要支持所有的函数调用操作，重载operator()()操作。
+
+remove_if()是通过unary_function继承下来的，允许传递数据作为条件。
+
+例如，假如想从一个vector中删除匹配的数据，如果字串中包含了一个值，从这个值开始，从这个值结束。
+
+首先应该建立一个数据结构来包含这些数据，类似代码如下：
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line">   <span class="keyword">enum</span> findmodes &#123;</span><br><span class="line">     FM_INVALID = <span class="number">0</span>,</span><br><span class="line">     FM_IS,</span><br><span class="line">   　FM_STARTSWITH,</span><br><span class="line">   　FM_ENDSWITH,</span><br><span class="line">   　FM_CONTAINS</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagFindStr</span> &#123;</span></span><br><span class="line">　UINT iMode;</span><br><span class="line">　CString szMatchStr;</span><br><span class="line">&#125; FindStr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> FindStr* LPFINDSTR;</span><br><span class="line">　　</span><br><span class="line">然后处理条件判断：</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FindMatchingString</span> :</span> <span class="keyword">public</span> <span class="built_in">std</span>::unary_function&lt;cstring, <span class="keyword">bool</span>=<span class="string">""</span>&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　FindMatchingString(<span class="keyword">const</span> LPFINDSTR lpFS) :</span><br><span class="line">　m_lpFS(lpFS) &#123;&#125;</span><br><span class="line">　<span class="keyword">bool</span> <span class="keyword">operator</span>()(CString&amp; szStringToCompare) <span class="keyword">const</span> &#123;</span><br><span class="line">　　<span class="keyword">bool</span> retVal = <span class="literal">false</span>;</span><br><span class="line">　　</span><br><span class="line">    <span class="keyword">switch</span> (m_lpFS-&gt;iMode) &#123;</span><br><span class="line">　　<span class="keyword">case</span> FM_IS: &#123;</span><br><span class="line">　　  retVal = (szStringToCompare == m_lpFDD-&gt;szMatchStr);</span><br><span class="line">　　  <span class="keyword">break</span>;</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">case</span> FM_STARTSWITH: &#123;</span><br><span class="line">　　  retVal = (szStringToCompare.Left(m_lpFDD-&gt;szMatchStr.GetLength())</span><br><span class="line">　　    == m_lpFDD-&gt;szWindowTitle);</span><br><span class="line">　　  <span class="keyword">break</span>;</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">case</span> FM_ENDSWITH: &#123;</span><br><span class="line">　　  retVal = (szStringToCompare.Right(m_lpFDD-&gt;szMatchStr.GetLength())</span><br><span class="line">　　    == m_lpFDD-&gt;szMatchStr);</span><br><span class="line">　　<span class="keyword">break</span>;</span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">case</span> FM_CONTAINS: &#123;</span><br><span class="line">　　  retVal = (szStringToCompare.Find(m_lpFDD-&gt;szMatchStr) != <span class="number">-1</span>);</span><br><span class="line">　　  <span class="keyword">break</span>;</span><br><span class="line">　　&#125;</span><br><span class="line">　  &#125;</span><br><span class="line">　  <span class="keyword">return</span> retVal;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">　LPFINDSTR m_lpFS;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></code></pre><p>​    </p>
+<p>  通过这个操作你可以从vector中有效地删除数据：</p>
+<p>  Remove(),remove_if()等所有的移出操作都是建立在一个迭代范围上的，不能操作容器中的数据。<br>  所以在使用remove_if()，实际上操作的时容器里数据的上面的。</p>
+<p>  看到remove_if()实际上是根据条件对迭代地址进行了修改，在数据的后面存在一些残余的数据，那些需要删除的数据。剩下的数据的位置可能不是原来的数据，但他们是不知道的。</p>
+<p>  调用erase()来删除那些残余的数据。</p>
+<p>  注意上面例子中通过erase()删除remove_if()的结果和vs.enc()范围的数据。</p>
+<pre><code>7. 综合例子：</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">```c++</span><br><span class="line"><span class="comment">//---------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> hdrstop</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Unit1.h"</span></span></span><br><span class="line"><span class="comment">//---------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> package(smart_init)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> resource <span class="meta-string">"*.dfm"</span></span></span><br><span class="line">TForm1 *Form1;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">STResult</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">double</span> Time;</span><br><span class="line">    <span class="keyword">double</span> Xp;</span><br><span class="line">    <span class="keyword">double</span> Yp;</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------------------------------</span></span><br><span class="line">__fastcall TForm1::TForm1(TComponent* Owner)</span><br><span class="line">    : TForm(Owner)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span> ResultVector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> __<span class="function">fastcall <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="comment">//vector ResultVector;</span></span><br><span class="line">    STResult stritem;</span><br><span class="line">    stritem.Time = <span class="number">.1</span>;</span><br><span class="line">    stritem.Xp = <span class="number">.1</span>;</span><br><span class="line">    stritem.Yp = <span class="number">.1</span>;</span><br><span class="line">    stritem.id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    ResultVector.push_back( stritem );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">void</span> __fastcall TForm1::Button1Click(TObject *Sender)</span><br><span class="line">&#123;</span><br><span class="line">    test();</span><br><span class="line">    assert(ResultVector[<span class="number">0</span>].id == <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">此文为摘抄，或有遗漏和错误待验证，摘抄下来学习基本的语法围住，若有不会再查阅进行修改。</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/03/28/Java%E5%BC%82%E5%B8%B8%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="next" title="Java异常及异常处理">
+                  <i class="fa fa-chevron-left"></i> Java异常及异常处理
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="执灬念"
+    src="/head/avatar.JPG">
+  <p class="site-author-name" itemprop="name">执灬念</p>
+  <div class="site-description" itemprop="description">没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">执灬念</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
