@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="执念の博客" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言方格填数（回溯算法求解）  回溯算法实际上一个类似枚举的搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回，尝试别的路径。回溯法是一种选优搜索法，按选优条件向前搜索，以达到目标。但当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，这种走不通就退回再走的技术为回溯法，而满足回溯条件的某个状态的点称为“回溯点”。许多复杂的，规模较大的问题">
+<meta name="keywords" content="C&#x2F;C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="方格填数">
+<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;index.html">
+<meta property="og:site_name" content="执念の博客">
+<meta property="og:description" content="前言方格填数（回溯算法求解）  回溯算法实际上一个类似枚举的搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回，尝试别的路径。回溯法是一种选优搜索法，按选优条件向前搜索，以达到目标。但当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，这种走不通就退回再走的技术为回溯法，而满足回溯条件的某个状态的点称为“回溯点”。许多复杂的，规模较大的问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;4.jpg">
+<meta property="og:updated_time" content="2019-11-08T12:25:00.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;04&#x2F;29&#x2F;%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0&#x2F;1.jpg">
+
+<link rel="canonical" href="https://zh1n1an.github.io/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>方格填数 | 执念の博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">执念の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">18</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head/avatar.JPG">
+      <meta itemprop="name" content="执灬念">
+      <meta itemprop="description" content="没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="执念の博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          方格填数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-29 19:49:43" itemprop="dateCreated datePublished" datetime="2019-04-29T19:49:43+08:00">2019-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-08 20:25:00" itemprop="dateModified" datetime="2019-11-08T20:25:00+08:00">2019-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>方格填数（回溯算法求解）</strong></p>
+<ul>
+<li><p>回溯算法实际上一个类似枚举的搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回，尝试别的路径。回溯法是一种选优搜索法，按选优条件向前搜索，以达到目标。但当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，这种走不通就退回再走的技术为回溯法，而满足回溯条件的某个状态的点称为“回溯点”。许多复杂的，规模较大的问题都可以使用回溯法，有“通用解题方法”的美称。</p>
+</li>
+<li><p>回溯法有通用解法的美称，对于很多问题，如迷宫等都有很好的效果。回溯算法实际上一个类似枚举的深度优先搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回（也就是递归返回），尝试别的路径。许多复杂的，规模较大的问题都可以使用回溯法，有“通用解题方法”的美称。回溯法说白了就是穷举法。回溯法一般用递归来解决。</p>
+<a id="more"></a>
+
+</li>
+</ul>
+<h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><ul>
+<li>回溯法一般都用在要给出多个可以实现最终条件的解的最终形式。回溯法要求对解要添加一些约束条件。总的来说，如果要解决一个回溯法的问题，通常要确定三个元素：</li>
+</ul>
+<ol>
+<li>选择。对于每个特定的解，肯定是由一步步构建而来的，而每一步怎么构建，肯定都是有限个选择，要怎么选择，这个要知道；同时，在编程时候要定下，优先或合法的每一步选择的顺序，一般是通过多个if或者for循环来排列。</li>
+<li>条件。对于每个特定的解的某一步，他必然要符合某个解要求符合的条件，如果不符合条件，就要回溯，其实回溯也就是递归调用的返回。</li>
+<li>结束。当到达一个特定结束条件时候，就认为这个一步步构建的解是符合要求的解了。把解存下来或者打印出来。对于这一步来说，有时候也可以另外写一个issolution函数来进行判断。注意，当到达第三步后，有时候还需要构建一个数据结构，把符合要求的解存起来，便于当得到所有解后，把解空间输出来。这个数据结构必须是全局的，作为参数之一传递给递归函数。</li>
+</ol>
+<ul>
+<li>对于回溯法来说，每次递归调用，很重要的一点是把每次递归的不同信息传递给递归调用的函数。而这里最重要的要传递给递归调用函数的信息，就是把上一步做过的某些事情的这个选择排除，避免重复和无限递归。另外还有一个信息必须传递给递归函数，就是进行了每一步选择后，暂时还没构成完整的解，这个时候前面所有选择的汇总也要传递进去。而且一般情况下，都是能从传递给递归函数的参数处，得到结束条件的。</li>
+<li>递归函数的参数的选择，要遵循四个原则：</li>
+</ul>
+<ol>
+<li>必须要有一个临时变量(可以就直接传递一个字面量或者常量进去)传递不完整的解，因为每一步选择后，暂时还没构成完整的解，这个时候这个选择的不完整解，也要想办法传递给递归函数。也就是，把每次递归的不同情况传递给递归调用的函数。</li>
+<li>可以有一个全局变量，用来存储完整的每个解，一般是个集合容器（也不一定要有这样一个变量，因为每次符合结束条件，不完整解就是完整解了，直接打印即可）。</li>
+<li>最重要的一点，一定要在参数设计中，可以得到结束条件。一个选择是可以传递一个量n，也许是数组的长度，也许是数量，等等。</li>
+<li>要保证递归函数返回后，状态可以恢复到递归前，以此达到真正回溯。</li>
+</ol>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><ul>
+<li>如下的10个格子</li>
+<li><img src="/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/1.jpg" alt="1"></li>
+<li>填入0~9的数字。要求：连续的两个数字不能相邻。</li>
+<li>（左右、上下、对角都算相邻）</li>
+<li>一共有多少种可能的填数方案？</li>
+<li>请填写表示方案数目的整数。</li>
+<li>注意：你提交的应该是一个整数，不要填写任何多余的内容或说明性文字。</li>
+</ul>
+<h2 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h2><p>首先我想到的就是回溯，比如第一个格子从0-9抓一个，然后第二个格子只能从剩下里面抓，并且每填写一个格子，就判断可以继续么（即满足连续的两个数字不能相邻么），然后如果OK，那么继续，直到最后一个格子能填上，就把次情况记录下来，但是如果判断不行，那么回溯上一个，继续遍历下一个可以抓的的数字，直到遍历完为止。</p>
+<p><strong>算法的伪代码：（将此框框补满补成五行六列的二维数组，是为了防止遍历判断的时候下标越界）</strong></p>
+<p><strong>输入：无</strong></p>
+<p><strong>输出：有多少种可能的填数方案</strong></p>
+<ol>
+<li>定义一个a[5][6]五行六列的二维数组。</li>
+<li>定义一个vis[10]有十个元素的一维数组用来标记是否被访问过。</li>
+<li>定义一个ans计数器。</li>
+<li>初始化数组(数组全部赋值为-10)</li>
+<li>传入(1,2)给f函数。<ol>
+<li>f函数：if (x == 3 &amp;&amp; y == 4)//即到达最末尾的格子<ol>
+<li>计数器ans++</li>
+<li>否则for (int i = 0; i &lt; 10; ++i)//从0-9抓一个<ol>
+<li>if (vis[i] == 0) //i没有被用过<ol>
+<li>a[x][y] = i //填入数字</li>
+<li>if(!check(x,y))//判断是否合法（即是否能满足连续的两个数字不能相邻么，<strong><em>check函数的思路最后再写了\</em></strong>）<ol>
+<li>若不合法，a[x][y]=-10 //把-10恢复并跳出此循环continue</li>
+<li>否则 vis[i] = 1 //标记为已访问</li>
+<li>if (y == 4)//如果y到4了，换行</li>
+<li>f(x + 1, 1)//传入换行后的位置</li>
+<li>否则，f(x, y + 1)//传入下一个位置</li>
+<li>vis[i] = 0 a[x][y]=-10//将此标记恢复，并且将此位置的值恢复为-10</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>输出计数器ans的值。</li>
+</ol>
+<p><strong>check**</strong>函数的伪代码：**</p>
+<ol>
+<li>遍历穿入位置的i，j为a[i][j]此位置的附近包括自己9个格子的数字为a[x][y]<ol>
+<li>判断,如果a[x][y] - a[i][j]的绝对值为1（说明两数相邻）<ol>
+<li>返回False</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>遍历完毕也没有返回False，说明检查通过，返回True</li>
+</ol>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by ZhiNian on 2019/4/29.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>][<span class="number">6</span>];<span class="comment">//记录每个位置的值</span></span><br><span class="line"><span class="keyword">int</span> vis[<span class="number">10</span>];<span class="comment">//记录0-9是否被用过</span></span><br><span class="line"><span class="keyword">int</span> ans;<span class="comment">//记录下每一次可行的填数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;<span class="comment">//检查</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = i - <span class="number">1</span>; x &lt;= i + <span class="number">1</span>; ++x) &#123;<span class="comment">//横向的此位置的左边一个到右边一个</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = j - <span class="number">1</span>; y &lt;= j + <span class="number">1</span>; ++y) &#123;<span class="comment">//纵向的的此位置上面一个到下面一个</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(a[x][y] - a[i][j]) == <span class="number">1</span>)<span class="comment">//如果与原数差的绝对值为1 ，说明相邻</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//返回False</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;<span class="comment">//遍历完都没有返回，那么说明符合，返回True</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="number">3</span> &amp;&amp; y == <span class="number">4</span>) &#123;<span class="comment">//遍历到了最后一个位置</span></span><br><span class="line">        ans++;<span class="comment">//此填数方法可行，则计数器加一</span></span><br><span class="line">        <span class="keyword">return</span>;<span class="comment">//返回函数，因为为void函数，所以返回无</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;<span class="comment">//从0~9中抓一个</span></span><br><span class="line">        <span class="keyword">if</span> (vis[i] == <span class="number">0</span>) &#123;<span class="comment">//检查是否使用过</span></span><br><span class="line">            a[x][y] = i;<span class="comment">//填数</span></span><br><span class="line">            <span class="keyword">if</span> (!check(x, y)) &#123;<span class="comment">//不合法</span></span><br><span class="line">                a[x][y] = <span class="number">-10</span>;<span class="comment">//恢复-10</span></span><br><span class="line">                <span class="keyword">continue</span>;<span class="comment">//跳出循环继续</span></span><br><span class="line">            &#125;</span><br><span class="line">            vis[i] = <span class="number">1</span>;<span class="comment">//若合法，标记为已访问</span></span><br><span class="line">            <span class="keyword">if</span> (y == <span class="number">4</span>)<span class="comment">//如果到第四列了</span></span><br><span class="line">                f(x + <span class="number">1</span>, <span class="number">1</span>);<span class="comment">//传入换行的位置给f递归</span></span><br><span class="line">            <span class="keyword">else</span><span class="comment">//否则</span></span><br><span class="line">                f(x, y + <span class="number">1</span>);<span class="comment">//传入下一个的位置给f递归</span></span><br><span class="line"></span><br><span class="line">            vis[i] = <span class="number">0</span>;<span class="comment">//回溯恢复标记为0</span></span><br><span class="line">            a[x][y] = <span class="number">-10</span>;<span class="comment">//回溯恢复值为-10</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;<span class="comment">//从第1行到第5行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">6</span>; ++j) &#123;<span class="comment">//从第1列到第6列</span></span><br><span class="line">            a[i][j] = <span class="number">-10</span>;<span class="comment">//全部赋值为-10</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    init();<span class="comment">//初始化二维数组</span></span><br><span class="line">    f(<span class="number">1</span>, <span class="number">2</span>);<span class="comment">//传入入口位置</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//输出计数器的值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/2.jpg" alt="2"></p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p><img src="/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/3.jpg" alt="3"></p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p><img src="/2019/04/29/%E6%96%B9%E6%A0%BC%E5%A1%AB%E6%95%B0/4.jpg" alt="4"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>这一次的试验内容很具有代表性，通过上机操作实践与对问题的思考，让我更深层次领悟了回溯法的思想。</li>
+<li>回溯算的基本思路并不难理解，简单来说就是：从一条路往前走，能进则进，不能进则退回来，换另一条路再试试。回溯法的基本做法是深度优先搜索，是一种组织得仅仅有条的、能避免不必要重复的穷举式搜索算法。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/04/24/%E6%9C%80%E5%A4%A7%E5%AD%97%E6%AE%B5%E5%92%8C/" rel="next" title="最大字段和">
+                  <i class="fa fa-chevron-left"></i> 最大字段和
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/05/24/%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E5%AE%9E%E9%AA%8C/" rel="prev" title="汇编的一些小实验">
+                  汇编的一些小实验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回溯"><span class="nav-number">2.</span> <span class="nav-text">回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">3.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法思路"><span class="nav-number">4.</span> <span class="nav-text">算法思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码"><span class="nav-number">5.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">6.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度"><span class="nav-number">7.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度"><span class="nav-number">8.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="执灬念"
+    src="/head/avatar.JPG">
+  <p class="site-author-name" itemprop="name">执灬念</p>
+  <div class="site-description" itemprop="description">没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">执灬念</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
