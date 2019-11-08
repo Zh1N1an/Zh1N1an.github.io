@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="执念の博客" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言： 过一年看都感觉很简单了，但是这些记录下来，看见自己成长的脚印，我觉得是很棒的一些事情，也可也给一些初入数据结构的伙伴们一些启发。  最基本的链表结构程序功能1．(菜单)主程序； 2．表的建立及初始化； 3．表的数据插入（插入的数据可是整数或字母）； 4．表的数据删除； 5．表的数据输出；">
+<meta name="keywords" content="C&#x2F;C++,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构的几个典例">
+<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2018&#x2F;12&#x2F;31&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B&#x2F;index.html">
+<meta property="og:site_name" content="执念の博客">
+<meta property="og:description" content="前言： 过一年看都感觉很简单了，但是这些记录下来，看见自己成长的脚印，我觉得是很棒的一些事情，也可也给一些初入数据结构的伙伴们一些启发。  最基本的链表结构程序功能1．(菜单)主程序； 2．表的建立及初始化； 3．表的数据插入（插入的数据可是整数或字母）； 4．表的数据删除； 5．表的数据输出；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2018&#x2F;12&#x2F;31&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B&#x2F;1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2018&#x2F;12&#x2F;31&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B&#x2F;2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2018&#x2F;12&#x2F;31&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B&#x2F;3.png">
+<meta property="og:updated_time" content="2019-11-08T11:27:00.124Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2018&#x2F;12&#x2F;31&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B&#x2F;1.png">
+
+<link rel="canonical" href="https://zh1n1an.github.io/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>数据结构的几个典例 | 执念の博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">执念の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">13</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head/avatar.JPG">
+      <meta itemprop="name" content="执灬念">
+      <meta itemprop="description" content="没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="执念の博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构的几个典例
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-31 19:03:50" itemprop="dateCreated datePublished" datetime="2018-12-31T19:03:50+08:00">2018-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-08 19:27:00" itemprop="dateModified" datetime="2019-11-08T19:27:00+08:00">2019-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/" itemprop="url" rel="index">
+                    <span itemprop="name">C/C++</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><ul>
+<li>过一年看都感觉很简单了，但是这些记录下来，看见自己成长的脚印，我觉得是很棒的一些事情，也可也给一些初入数据结构的伙伴们一些启发。</li>
+</ul>
+<h2 id="最基本的链表结构"><a href="#最基本的链表结构" class="headerlink" title="最基本的链表结构"></a>最基本的链表结构</h2><h3 id="程序功能"><a href="#程序功能" class="headerlink" title="程序功能"></a>程序功能</h3><p>1．(菜单)主程序；</p>
+<p>2．表的建立及初始化；</p>
+<p>3．表的数据插入（插入的数据可是整数或字母）；</p>
+<p>4．表的数据删除；</p>
+<p>5．表的数据输出；</p>
+<a id="more"></a>
+
+<h3 id="程序源代码"><a href="#程序源代码" class="headerlink" title="程序源代码"></a>程序源代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> datatype;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxsize 1024</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    datatype data[maxsize];</span><br><span class="line">    <span class="keyword">int</span> last;</span><br><span class="line">&#125;sequenlist;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CREAT</span><span class="params">(sequenlist *L)</span><span class="comment">//创建一个初始顺序表</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,i,j=<span class="number">1</span>;</span><br><span class="line">    L-&gt;last=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入初始建立的数据个数:\n"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++,j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Data[%d]:"</span>,j);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;L-&gt;data[i]);</span><br><span class="line">        L-&gt;last++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">INSERT</span><span class="params">(sequenlist *L,<span class="keyword">char</span> x,<span class="keyword">int</span> i)</span> <span class="comment">//将新节点x插入顺序表L上的第i个位置</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">if</span>(((*L).last)&gt;=maxsize<span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"overflow"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((i&lt;<span class="number">1</span>)||(i&gt;((*L).last)+<span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=(*L).last;j&gt;=i<span class="number">-1</span>;j--)</span><br><span class="line">            (*L).data[j+<span class="number">1</span>]=(*L).data[j];</span><br><span class="line">        (*L).data[i<span class="number">-1</span>]=x;</span><br><span class="line">        (*L).last=(*L).last+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DELETE</span><span class="params">(sequenlist *L,<span class="keyword">int</span> i)</span> <span class="comment">//从顺序表L上删除第i个位置上的结点</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">if</span>((i&lt;<span class="number">1</span>)||(i&gt;(*L).last+<span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"errer"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=i;j&lt;=(*L).last;j++)</span><br><span class="line">            (*L).data[j<span class="number">-1</span>]=(*L).data[j];</span><br><span class="line">        (*L).last--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SHOW</span><span class="params">(sequenlist *L)</span><span class="comment">//输出</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;L-&gt;last;i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d	"</span>,L-&gt;data[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">charu</span><span class="params">(sequenlist *L)</span><span class="comment">//插入的导航项</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x,i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入需要插入的位置："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入需要插入的数据："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    INSERT(L,x,i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shanchu</span><span class="params">(sequenlist *L)</span><span class="comment">//删除的导航项</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入需要删除的位置："</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;i);</span><br><span class="line">    DELETE(L,i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    sequenlist *L;</span><br><span class="line">    sequenlist <span class="built_in">list</span>;</span><br><span class="line">    L=&amp;<span class="built_in">list</span>;</span><br><span class="line">    <span class="keyword">int</span> select;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)<span class="comment">//循环菜单</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"请选择要执行的操作：\n1.表的建立及初始化  2.表的数据插入  3.表的数据删除  4.表的数据输出  5.退出\n"</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;select);</span><br><span class="line">        <span class="keyword">switch</span>(select)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span> : CREAT(L); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span> : charu(L); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span> : shanchu(L); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span> : SHOW(L);<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">5</span> : <span class="built_in">exit</span>(<span class="number">1</span>);<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span> : <span class="built_in">printf</span>(<span class="string">"输入有误！"</span>);<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Huffman树建立与中序遍历的实现"><a href="#Huffman树建立与中序遍历的实现" class="headerlink" title="Huffman树建立与中序遍历的实现"></a><strong>Huffman</strong>树建立与中序遍历的实现</h2><h3 id="程序功能-1"><a href="#程序功能-1" class="headerlink" title="程序功能"></a>程序功能</h3><ol>
+<li><p>(菜单)主程序；</p>
+</li>
+<li><p>Huffman树的建立；</p>
+</li>
+<li><p>Huffman树的中序遍历；</p>
+</li>
+</ol>
+<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="keyword">char</span> letter;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">lchild</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">rchild</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> <span class="title">a</span>[<span class="title">N</span>];</span></span><br><span class="line"><span class="keyword">int</span> NUM;</span><br><span class="line"></span><br><span class="line"><span class="function">struct Node *<span class="title">Huffman</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,n;</span><br><span class="line">	<span class="keyword">int</span> x,y,z;</span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	<span class="keyword">int</span> s;</span><br><span class="line">	<span class="keyword">char</span> letter;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">lchild</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">rchild</span>;</span></span><br><span class="line">	n=i=NUM;<span class="comment">//计算输入了多少个数据的记录值</span></span><br><span class="line">	x=<span class="number">0</span>;<span class="comment">//记录节点运行到了哪里</span></span><br><span class="line">	y=<span class="number">0</span>;<span class="comment">//每一次找出最小和次最小归零的两次循环计数</span></span><br><span class="line">	z=<span class="number">1</span>;<span class="comment">//合并次数的计数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	s=n;<span class="comment">//记录下原来有多少个值</span></span><br><span class="line">	<span class="keyword">while</span>(z&lt;s)<span class="comment">//运行哈夫曼合并 循环次数小于节点数—1 因为z=1开始当z=5时候无法进行循环 即进行了4次 so 这个循环进行s-1次 进行s-1次合并</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(y&lt;<span class="number">2</span>)<span class="comment">//找出第一个最小的和第二个最小的</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(i=x+<span class="number">1</span>;i&lt;n;i++)<span class="comment">//找出最小的数并赋值给a[x]</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(a[x].data&gt;=a[i].data)</span><br><span class="line">				&#123;</span><br><span class="line">				data=a[x].data;</span><br><span class="line">				letter=a[x].letter;</span><br><span class="line">				lchild=a[x].lchild;</span><br><span class="line">				rchild=a[x].rchild;</span><br><span class="line">				a[x].letter=a[i].letter;</span><br><span class="line">				a[x].data=a[i].data;</span><br><span class="line">				a[x].lchild=a[i].lchild;</span><br><span class="line">				a[x].rchild=a[i].rchild;</span><br><span class="line">				a[i].letter=letter;</span><br><span class="line">				a[i].data=data;</span><br><span class="line">				a[i].rchild=rchild;</span><br><span class="line">				a[i].lchild=lchild;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="comment">//此时最小的是a[x]</span></span><br><span class="line">			x++;<span class="comment">//此时最小的是a[x-1]，第二小的是a[x]</span></span><br><span class="line">			y++;</span><br><span class="line">		&#125;</span><br><span class="line">		n++;<span class="comment">//添加一个节点存储树根</span></span><br><span class="line">		a[n<span class="number">-1</span>].lchild=&amp;a[x<span class="number">-2</span>];</span><br><span class="line">  		a[n<span class="number">-1</span>].rchild=&amp;a[x<span class="number">-1</span>];</span><br><span class="line">		a[n<span class="number">-1</span>].data=a[x<span class="number">-2</span>].data+a[x<span class="number">-1</span>].data;</span><br><span class="line">		z++;</span><br><span class="line">		y=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;a[n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">input</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入您需要输入的树的数量！\n"</span>);</span><br><span class="line">	<span class="keyword">int</span> x=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;NUM);</span><br><span class="line">	<span class="keyword">int</span> i; </span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;NUM;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		a[i].lchild=<span class="literal">NULL</span>;</span><br><span class="line">		a[i].rchild=<span class="literal">NULL</span>;</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"请输入第%d棵树的字母！\n"</span>,x);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%c"</span>,&amp;a[i].letter);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"请输入第%d棵树的数值！\n"</span>,x);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i].data);</span><br><span class="line">		x++;</span><br><span class="line">	&#125;</span><br><span class="line"> 	 </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LDR</span><span class="params">(struct Node *r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(r!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		LDR(r-&gt;lchild);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d       %c\n"</span>,r-&gt;data,r-&gt;letter);</span><br><span class="line">		LDR(r-&gt;rchild);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">root</span>;</span></span><br><span class="line">	input();</span><br><span class="line">	root=Huffman();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历输出:\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"节点值: 字母:\n"</span>);</span><br><span class="line">	LDR(root);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Prim算法构造最小生成树的实现"><a href="#Prim算法构造最小生成树的实现" class="headerlink" title="Prim算法构造最小生成树的实现"></a>Prim算法构造最小生成树的实现</h2><h3 id="程序功能-2"><a href="#程序功能-2" class="headerlink" title="程序功能"></a>程序功能</h3><ol>
+<li><p>Prim算法对课本139页图7.16构造最小生成树；</p>
+</li>
+<li><p>输出最小生成树的边；</p>
+</li>
+</ol>
+<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> n 6 <span class="comment">//其他的图需要自行改变</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> fromvex,endvex;</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">&#125; edge;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dist[n][n];</span><br><span class="line">edge T[n<span class="number">-1</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">input</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"请输入点%d到点%d的权值（若无则输入比最大的边的权值还要大的值（例如图最大权值为20则不存在边的输入21））："</span>,i,j);</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;dist[i<span class="number">-1</span>][j<span class="number">-1</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PRIM</span><span class="params">()</span> <span class="comment">//从第一个点出发构造联通网络dist的最小生成树，结果放在结构体数组T中</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j,k,m,v,<span class="built_in">min</span>,<span class="built_in">max</span>=<span class="number">10000</span>;</span><br><span class="line">	<span class="keyword">int</span> d;</span><br><span class="line">	edge e;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">		T[j<span class="number">-1</span>].fromvex=<span class="number">1</span>;<span class="comment">//序号为1的节点，第一个加入树中的节点</span></span><br><span class="line">		T[j<span class="number">-1</span>].endvex=j+<span class="number">1</span>;</span><br><span class="line">		T[j<span class="number">-1</span>].length=dist[<span class="number">0</span>][j];<span class="comment">//循环把所有与1节点相关的边存入T中候选</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;n<span class="number">-1</span>;k++)<span class="comment">//在T中找到最短的边</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">min</span>=<span class="built_in">max</span>;</span><br><span class="line">		<span class="keyword">for</span>(j=k;j&lt;n<span class="number">-1</span>;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(T[j].length&lt;<span class="built_in">min</span>)<span class="comment">//如果所读取的length小于min则把此length赋值给min</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">min</span>=T[j].length;</span><br><span class="line">				m=j;</span><br><span class="line">			&#125;<span class="comment">//此时T[m]为最短的那一条边</span></span><br><span class="line">		&#125;</span><br><span class="line">			e=T[m];T[m]=T[k];T[k]=e;<span class="comment">//交换后T[k]为加入树的第一边，而T[m]为默认的一个边，则T[k]以前的边都是比T[k]大的边</span></span><br><span class="line">			v=T[k].endvex;<span class="comment">//记录加入树中的第二个节点</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"第%d条边 权值为%d 连接了%d和%d两个点\n"</span>,k+<span class="number">1</span>,T[k].length,T[k].fromvex,T[k].endvex);</span><br><span class="line">			<span class="keyword">for</span>(j=k+<span class="number">1</span>;j&lt;n<span class="number">-1</span>;j++)<span class="comment">//更新T中的每一条边，过滤掉大的边</span></span><br><span class="line">			&#123;</span><br><span class="line">				d=dist[v<span class="number">-1</span>][T[j].endvex<span class="number">-1</span>];</span><br><span class="line">				<span class="keyword">if</span>(d&lt;T[j].length)</span><br><span class="line">				&#123;</span><br><span class="line">					T[j].length=d;</span><br><span class="line">					T[j].fromvex=v;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	input();</span><br><span class="line">	PRIM();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="待处理图"><a href="#待处理图" class="headerlink" title="待处理图"></a>待处理图</h3><p><img src="/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/1.png" alt="1"></p>
+<h3 id="变成待处理表格"><a href="#变成待处理表格" class="headerlink" title="变成待处理表格"></a>变成待处理表格</h3><p>变成a[6][6]的表格为（这里因为最大的权重为7，则连不到的输入8）</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>8</td>
+<td>6</td>
+<td>1</td>
+<td>5</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>8</td>
+<td>5</td>
+<td>8</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+<td>8</td>
+<td>7</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+<td>8</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td>6</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/2.png" alt="2"></p>
+<h2 id="快速排序算法的实现"><a href="#快速排序算法的实现" class="headerlink" title="快速排序算法的实现"></a>快速排序算法的实现</h2><h3 id="程序功能-3"><a href="#程序功能-3" class="headerlink" title="程序功能"></a>程序功能</h3><ol>
+<li><p>(菜单)主程序；</p>
+</li>
+<li><p>排序数据的建立；</p>
+</li>
+<li><p>输出采用快速排序算法实现的每一趟排序结果；</p>
+</li>
+</ol>
+<h3 id="源代码-2"><a href="#源代码-2" class="headerlink" title="源代码"></a>源代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[N];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> s1,t1;</span><br><span class="line"><span class="keyword">int</span> l,h;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">input</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入您需要输入几个数字:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	t1=n<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span>(k&lt;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"请输入第%d个数:"</span>,k+<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[k]);</span><br><span class="line">		k++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">output</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(k&lt;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[k]);</span><br><span class="line">		k++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> a[N],<span class="keyword">int</span> l,<span class="keyword">int</span> h)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	i=l;</span><br><span class="line">	j=h;</span><br><span class="line">	temp=a[i];</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>((a[j]&gt;=temp)&amp;&amp;(i&lt;j))</span><br><span class="line">			j--;</span><br><span class="line">		<span class="keyword">if</span>(i&lt;j)</span><br><span class="line">			a[i++]=a[j];</span><br><span class="line">		<span class="keyword">while</span>((a[i]&lt;=temp)&amp;&amp;(i&lt;j))</span><br><span class="line">			i++;</span><br><span class="line">		<span class="keyword">if</span>(i&lt;j)</span><br><span class="line">			a[j--]=a[i];</span><br><span class="line">	&#125;<span class="keyword">while</span>(i!=j);</span><br><span class="line">	a[i]=temp;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(<span class="keyword">int</span> a[N],<span class="keyword">int</span> s1,<span class="keyword">int</span> t1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span>(s1&lt;t1)</span><br><span class="line">	&#123;</span><br><span class="line">		i=partition(a,s1,t1);</span><br><span class="line">		quicksort(a,s1,i<span class="number">-1</span>);</span><br><span class="line">		quicksort(a,i+<span class="number">1</span>,t1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	input();</span><br><span class="line">	quicksort(a,<span class="number">0</span>,n<span class="number">-1</span>);</span><br><span class="line">	output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/3.png" alt="3"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这些都是大二上学期写的实验中 比较经典的，现在回头看，非常的简单，但是当时对自己还是有一些许挑战的，留来记录自己成长吧，不积跬步无以至千里。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2018/03/12/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84C%E8%AF%AD%E8%A8%80%E6%88%90%E7%BB%A9%E8%AE%B0%E5%BD%95%E7%B0%BF/" rel="next" title="一个简易的C语言成绩记录簿">
+                  <i class="fa fa-chevron-left"></i> 一个简易的C语言成绩记录簿
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/03/16/C-C-%E4%B8%AD%E7%9A%84%E5%B0%8F%E7%BB%86%E8%8A%82/" rel="prev" title="C/C++中的小细节">
+                  C/C++中的小细节 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最基本的链表结构"><span class="nav-number">2.</span> <span class="nav-text">最基本的链表结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序功能"><span class="nav-number">2.1.</span> <span class="nav-text">程序功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序源代码"><span class="nav-number">2.2.</span> <span class="nav-text">程序源代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Huffman树建立与中序遍历的实现"><span class="nav-number">3.</span> <span class="nav-text">Huffman树建立与中序遍历的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序功能-1"><span class="nav-number">3.1.</span> <span class="nav-text">程序功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码"><span class="nav-number">3.2.</span> <span class="nav-text">源代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法构造最小生成树的实现"><span class="nav-number">4.</span> <span class="nav-text">Prim算法构造最小生成树的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序功能-2"><span class="nav-number">4.1.</span> <span class="nav-text">程序功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#待处理图"><span class="nav-number">4.3.</span> <span class="nav-text">待处理图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变成待处理表格"><span class="nav-number">4.4.</span> <span class="nav-text">变成待处理表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行结果"><span class="nav-number">4.5.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序算法的实现"><span class="nav-number">5.</span> <span class="nav-text">快速排序算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序功能-3"><span class="nav-number">5.1.</span> <span class="nav-text">程序功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码-2"><span class="nav-number">5.2.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行结果-1"><span class="nav-number">5.3.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">6.</span> <span class="nav-text">结论</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="执灬念"
+    src="/head/avatar.JPG">
+  <p class="site-author-name" itemprop="name">执灬念</p>
+  <div class="site-description" itemprop="description">没有一颗心，会因为追求梦想而受伤。当你真心渴望某样东西时，整个宇宙都会来帮忙。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">执灬念</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
