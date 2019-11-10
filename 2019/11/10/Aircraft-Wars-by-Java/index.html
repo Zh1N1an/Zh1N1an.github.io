@@ -51,18 +51,21 @@
   };
 </script>
 
-  <meta name="description" content="查找对象：顺序存储的有序表。  思路：由于查找的表是有序的（假设是从小到大），地址在中间位置的元素必然在排序中也属于中间次序。 step1：设置两个指针，一个（low）指向第一个元素，另一个（high）指向最后一个元素。 step2：找到中间元素（mid=(low+high)&#x2F;2）与要查找的元素比较。 step3：若相等，万事大吉，返回当前位置（mid）； ​          若该元素大于目标">
-<meta name="keywords" content="C&#x2F;C++,算法">
+  <meta name="description" content="Aircraft Wars by Java 前言 这是一个算是自己第一个小项目吧，在学校的短学期完成的一个实验报告，老师有参考代码，网上也有七七八八的，但是，这是我完完全全自己一步步思考一步步按下手下的键盘敲击而成的第一个，或许不是特别完美，及其简陋的小项目，或许这终于能称得上是项目了吧，写了一个叫雷霆战机的游戏。">
+<meta name="keywords" content="Java,项目,游戏">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二分查找">
-<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;03&#x2F;17&#x2F;%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE&#x2F;index.html">
+<meta property="og:title" content="Aircraft Wars by Java">
+<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;Aircraft-Wars-by-Java&#x2F;index.html">
 <meta property="og:site_name" content="执念の博客">
-<meta property="og:description" content="查找对象：顺序存储的有序表。  思路：由于查找的表是有序的（假设是从小到大），地址在中间位置的元素必然在排序中也属于中间次序。 step1：设置两个指针，一个（low）指向第一个元素，另一个（high）指向最后一个元素。 step2：找到中间元素（mid=(low+high)&#x2F;2）与要查找的元素比较。 step3：若相等，万事大吉，返回当前位置（mid）； ​          若该元素大于目标">
+<meta property="og:description" content="Aircraft Wars by Java 前言 这是一个算是自己第一个小项目吧，在学校的短学期完成的一个实验报告，老师有参考代码，网上也有七七八八的，但是，这是我完完全全自己一步步思考一步步按下手下的键盘敲击而成的第一个，或许不是特别完美，及其简陋的小项目，或许这终于能称得上是项目了吧，写了一个叫雷霆战机的游戏。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T12:58:07.006Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;Aircraft-Wars-by-Java&#x2F;1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;Aircraft-Wars-by-Java&#x2F;2.png">
+<meta property="og:updated_time" content="2019-11-10T08:31:59.377Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;Aircraft-Wars-by-Java&#x2F;1.png">
 
-<link rel="canonical" href="https://zh1n1an.github.io/2019/03/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
+<link rel="canonical" href="https://zh1n1an.github.io/2019/11/10/Aircraft-Wars-by-Java/">
 
 
 <script id="page-configurations">
@@ -76,7 +79,7 @@
   };
 </script>
 
-  <title>二分查找 | 执念の博客</title>
+  <title>Aircraft Wars by Java | 执念の博客</title>
   
 
 
@@ -190,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2019/03/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
+    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2019/11/10/Aircraft-Wars-by-Java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/head/avatar.JPG">
@@ -203,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          二分查找
+          Aircraft Wars by Java
         </h1>
 
         <div class="post-meta">
@@ -212,30 +215,24 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-03-17 22:08:52" itemprop="dateCreated datePublished" datetime="2019-03-17T22:08:52+08:00">2019-03-17</time>
+              <time title="创建时间：2019-11-10 16:07:02 / 修改时间：16:31:59" itemprop="dateCreated datePublished" datetime="2019-11-10T16:07:02+08:00">2019-11-10</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-08 20:58:07" itemprop="dateModified" datetime="2019-11-08T20:58:07+08:00">2019-11-08</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
+                  <a href="/categories/%E5%BE%AE%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">微项目</span>
                   </a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-C/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
+                  <a href="/categories/%E5%BE%AE%E9%A1%B9%E7%9B%AE/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
             </span>
@@ -251,23 +248,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li><p>查找对象：顺序存储的有序表。</p>
-</li>
-<li><p>思路：由于查找的表是有序的（假设是从小到大），地址在中间位置的元素必然在排序中也属于中间次序。</p>
-<p>step1：设置两个指针，一个（low）指向第一个元素，另一个（high）指向最后一个元素。</p>
-<p>step2：找到中间元素（mid=(low+high)/2）与要查找的元素比较。</p>
-<p>step3：若相等，万事大吉，返回当前位置（mid）；</p>
-<p>​          若该元素大于目标元素，说明目标元素在左侧，指针high=mid-1，查找左边；</p>
-<p>​          若该元素小于目标元素，说明目标元素在右侧，指针low=mid+1，查找右侧。</p>
-<p>step4：重复step2、step3，指针查找到目标元素。</p>
+        <p>Aircraft Wars by Java</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ol>
+<li><p>这是一个算是自己第一个小项目吧，在学校的短学期完成的一个实验报告，老师有参考代码，网上也有七七八八的，但是，这是我完完全全自己一步步思考一步步按下手下的键盘敲击而成的第一个，或许不是特别完美，及其简陋的小项目，或许这终于能称得上是项目了吧，写了一个叫雷霆战机的游戏。</p>
 <a id="more"></a>
 </li>
-<li><p>代码实现：</p>
+<li><p>这一次的课程设计，使我受益匪浅，我从仅仅是“纸上谈兵“到可以编写出一个小游戏的过程，这个过程所经历的努力，和对面向对象的深刻理解让我终生难忘，那种从单纯上课无法学到的东西，就例如：让我知道了有Java适配器并且使用这个东西，非常的巧妙，就像手机是Type-c接口，但是只有一个传统的MicroUSB的充电线，那么就弄一个转接头就可以充电了，而适配器就像这么一个转接头，还知道了我若想实现一个接口而不想把所有的方法实现，可以通过匿名内部类去只实现其中的一个接口，比如Timer中的schedule，还初步了解了Swing的用法，通过自学将数组改成集合，让我知道了Java集合有多么的好用。</p>
 </li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 二分查找 </span></span><br><span class="line"><span class="comment">* @Date:2019/03/14</span></span><br><span class="line"><span class="comment">* @Author:Jason Hu</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binary_search</span><span class="params">(<span class="keyword">int</span> table[], <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> high = <span class="number">9</span>;</span><br><span class="line"><span class="comment">//	特别注意：这里必须是 &lt;= </span></span><br><span class="line">	<span class="keyword">while</span>(low&lt;=high)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (low+high)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(key==table[mid]) <span class="keyword">return</span> mid;</span><br><span class="line">		<span class="keyword">if</span>(key&gt;table[mid]) low = mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(key&lt;table[mid]) high = mid<span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//	顺序存储的有序表</span></span><br><span class="line">	<span class="keyword">int</span> table[<span class="number">10</span>] = &#123;<span class="number">5</span>, <span class="number">13</span>, <span class="number">19</span>, <span class="number">21</span>, <span class="number">37</span>, <span class="number">56</span>, <span class="number">64</span>, <span class="number">75</span>, <span class="number">80</span>, <span class="number">92</span>&#125;;</span><br><span class="line"><span class="comment">//	查找对象</span></span><br><span class="line">	<span class="keyword">int</span> key = <span class="number">64</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;binary_search(table,key)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<li><p>而那种面向对象编程，和多态的美妙，那种使用父类或者一个接口去归类几种类，在主函数中统一调用，若是A类对象则用A方法，若是B类对象则用B方法。面向对象去编程，需要哪一些对象，去为之做一个类，去编写他的行为，还有封装，面对一项功能，我们可以尽可能封装在外面或者别的类内，从而更加有层次，在代码量特别多的时候更好去理解，去梳理思路等等，我认为这是我收获最大的，让我深刻的了解了面向对象的三大特性：封装、继承、多态。</p>
+</li>
+</ol>
+<h1 id="游戏规则"><a href="#游戏规则" class="headerlink" title="游戏规则"></a>游戏规则</h1><ol>
+<li>首先是点击游戏开始，需要有游戏开始界面</li>
+<li>其次是消灭一个敌机要加分，消灭大敌机加的分要更加的多</li>
+<li>再然后是消灭蜜蜂加一倍的火力或者加一条生命，如果是宝箱就直接四倍火力加两条命</li>
+<li>当英雄机碰到其他任何飞行物（包括宝箱或蜜蜂），都掉一条命</li>
+<li>火力5秒钟减少一条子弹</li>
+<li>当生命值为0的时候游戏结束</li>
+<li>再次点击可以重新开始游戏</li>
+</ol>
+<h1 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h1><ol>
+<li>拿到素材后首先对界面的大小进行设置，界面需要显示的素材有三张图片，开始（start）（400x654）、结束（pause）（400x654）、背景（background）（480x852），然后当然选择了400x654作为界面的长宽，因为如果用背景图480x852的长宽作为界面的宽度，那么会发生暂停界面出现的时候，边缘会露出背景图片。</li>
+<li>首先想清楚有哪些对象、有蜜蜂、大宝箱、敌机、大敌机、子弹、英雄机、然后呢蜜蜂和大宝箱可以作为一类，都是获取奖励的，敌机和大敌机可以作为一类、都是获取分数的、所以就想到了接口，给前一种类型，写一个接口去定义一个抽象函数，用来返回奖励类型，进行在子类中实现，后一种类型、写一个接口定义一个抽象函数，用来返回得分，在子类中实现，然后，因为当子弹碰到蜜蜂、大宝箱、敌机或者是大敌机，都会被消灭，而英雄机碰到蜜蜂、大宝箱、敌机或者是大敌机，都会掉一条命，而子弹碰上敌方单位也会消失，英雄机也需要有以下的功能，所以这所有的类可以给他们建立一个飞行物的父类，因为他们都同样有x，y坐标、有速度、有图片、并且有图片的宽高、并且要为他们定义一个outOfBorder()是否出界的方法、和一个step()每下一秒移动改变位置的方法。</li>
+<li>在老师最初的要求上我加入了大宝箱和大敌机还有大宝箱和蜜蜂出来的方向我希望他随机，所以写了一个随机方法、所以在大宝箱和蜜蜂，除了实现父类的方法和接口外，添加了初始运动方向的随机变量，就没有了。</li>
+<li>而大敌机和敌机仅仅是实现父类的方法和接口外就没有添加额外的方法了</li>
+<li>子弹实现了父类的方法后就没有进行添加了</li>
+<li>英雄机不仅实现了父类的方法和接口后，需要有鼠标的位置值、还需要有鼠标移动的方法moveTo(int x, int y)、需要有判断撞到敌机的方法hitEnemy(FlyingObject flyingObject)、需要还需要两个set和get函数去获取私有变量的火力和生命值。</li>
+<li>最终的便是带有main函数的主类、主类就需要获取图片、需要使用Java Swing进行显示游戏、需要监听鼠标、需要有自动生成敌人对象、自动生成子弹、自动进行下一次屏幕刷新后，所有飞行物飞行的下一个位置的计算、需要一个游戏规则（进行子弹与敌方单位碰撞，敌方单位与英雄机碰撞会发生什么）的方法。</li>
+</ol>
+<h1 id="项目代码"><a href="#项目代码" class="headerlink" title="项目代码"></a>项目代码</h1><p>当然也是我第一次将自己的第一个项目学着用git通过IDEA将项目公开的存在我的GitHub的仓库上链接在下，感兴趣可以下载来玩一玩，但是别嫌弃它简陋 0.0</p>
+<p>链接在这<a href="https://github.com/Zh1N1an/AircraftWars" target="_blank" rel="noopener"> ≖‿≖✧ </a></p>
+<h1 id="游戏的部分截图"><a href="#游戏的部分截图" class="headerlink" title="游戏的部分截图"></a>游戏的部分截图</h1><p><img src="/2019/11/10/Aircraft-Wars-by-Java/1.png" alt="1"></p>
+<p><img src="/2019/11/10/Aircraft-Wars-by-Java/2.png" alt="2"></p>
 
     </div>
 
@@ -277,25 +289,23 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C-C/" rel="tag"># C/C++</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag"># 项目</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag"># 游戏</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/03/16/C-C-%E4%B8%AD%E7%9A%84%E5%B0%8F%E7%BB%86%E8%8A%82/" rel="next" title="C/C++中的小细节">
-                  <i class="fa fa-chevron-left"></i> C/C++中的小细节
+                <a href="/2019/11/08/%E5%87%8F%E5%B0%91%E9%BA%BB%E7%83%A6%EF%BC%8C%E5%A4%9A%E5%81%9A%E8%A6%81%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85/" rel="next" title="减少麻烦，多做要做的事情">
+                  <i class="fa fa-chevron-left"></i> 减少麻烦，多做要做的事情
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/03/19/%E5%85%B3%E4%BA%8E%E5%B9%B2%E6%8E%89%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9E%E7%BB%AD%E6%9C%AB%E5%B0%BE1or%E5%8D%95%E4%B8%AA%E6%9C%AB%E5%B0%BE1/" rel="prev" title="关于干掉二进制连续末尾1or单个末尾1">
-                  关于干掉二进制连续末尾1or单个末尾1 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -334,6 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游戏规则"><span class="nav-number">2.</span> <span class="nav-text">游戏规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计思想"><span class="nav-number">3.</span> <span class="nav-text">设计思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目代码"><span class="nav-number">4.</span> <span class="nav-text">项目代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#游戏的部分截图"><span class="nav-number">5.</span> <span class="nav-text">游戏的部分截图</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
