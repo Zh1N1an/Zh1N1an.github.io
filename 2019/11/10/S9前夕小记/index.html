@@ -51,18 +51,21 @@
   };
 </script>
 
-  <meta name="description" content="前言在赛题上，有很多需要将整型数值进行一位一位运算的，或许最笨的办法就是除以100000……，但是在2013年蓝桥杯第二题的一个老师的视频解析里教了这么一种巧妙地办法，所以记录一下 代码实现123456789101112131415161718192021#include &amp;lt;sstream&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstring&amp;gt">
-<meta name="keywords" content="C&#x2F;C++,算法,蓝桥杯">
+  <meta name="description" content="2019年11月10日17：15分，我还在学校的图书馆四楼，旁边的同学们好多都去吃饭了，我咕噜咕噜地灌着水，等待着6点钟，错过高峰期吃饭，然后回宿舍洗澡，买上零食坐到电脑前准备观看一年一度的英雄联盟S赛的最重要的BO5。">
+<meta name="keywords" content="游戏,英雄联盟">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于使用C++进行字符和整型互转的简易方法">
-<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;03&#x2F;10&#x2F;%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8C-%E8%BF%9B%E8%A1%8C%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B4%E5%9E%8B%E4%BA%92%E8%BD%AC%E7%9A%84%E7%AE%80%E6%98%93%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:title" content="S9前夕小记">
+<meta property="og:url" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="执念の博客">
-<meta property="og:description" content="前言在赛题上，有很多需要将整型数值进行一位一位运算的，或许最笨的办法就是除以100000……，但是在2013年蓝桥杯第二题的一个老师的视频解析里教了这么一种巧妙地办法，所以记录一下 代码实现123456789101112131415161718192021#include &amp;lt;sstream&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstring&amp;gt">
+<meta property="og:description" content="2019年11月10日17：15分，我还在学校的图书馆四楼，旁边的同学们好多都去吃饭了，我咕噜咕噜地灌着水，等待着6点钟，错过高峰期吃饭，然后回宿舍洗澡，买上零食坐到电脑前准备观看一年一度的英雄联盟S赛的最重要的BO5。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-10T09:11:42.957Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0&#x2F;1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0&#x2F;2.png">
+<meta property="og:updated_time" content="2019-11-10T10:11:08.885Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;zh1n1an.github.io&#x2F;2019&#x2F;11&#x2F;10&#x2F;S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0&#x2F;1.png">
 
-<link rel="canonical" href="https://zh1n1an.github.io/2019/03/10/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8C-%E8%BF%9B%E8%A1%8C%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B4%E5%9E%8B%E4%BA%92%E8%BD%AC%E7%9A%84%E7%AE%80%E6%98%93%E6%96%B9%E6%B3%95/">
+<link rel="canonical" href="https://zh1n1an.github.io/2019/11/10/S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -76,7 +79,7 @@
   };
 </script>
 
-  <title>关于使用C++进行字符和整型互转的简易方法 | 执念の博客</title>
+  <title>S9前夕小记 | 执念の博客</title>
   
 
 
@@ -190,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2019/03/10/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8C-%E8%BF%9B%E8%A1%8C%E5%AD%97%E7%AC%A6%E5%92%8C%E6%95%B4%E5%9E%8B%E4%BA%92%E8%BD%AC%E7%9A%84%E7%AE%80%E6%98%93%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://zh1n1an.github.io/2019/11/10/S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/head/avatar.JPG">
@@ -203,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于使用C++进行字符和整型互转的简易方法
+          S9前夕小记
         </h1>
 
         <div class="post-meta">
@@ -212,30 +215,24 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-03-10 17:06:40" itemprop="dateCreated datePublished" datetime="2019-03-10T17:06:40+08:00">2019-03-10</time>
+              <time title="创建时间：2019-11-10 17:14:46 / 修改时间：18:11:08" itemprop="dateCreated datePublished" datetime="2019-11-10T17:14:46+08:00">2019-11-10</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-10 17:11:42" itemprop="dateModified" datetime="2019-11-10T17:11:42+08:00">2019-11-10</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-C/" itemprop="url" rel="index">
-                    <span itemprop="name">C/C++</span>
+                  <a href="/categories/%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏</span>
                   </a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-C/%E8%93%9D%E6%A1%A5%E6%9D%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">蓝桥杯</span>
+                  <a href="/categories/%E6%B8%B8%E6%88%8F/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">英雄联盟</span>
                   </a>
                 </span>
             </span>
@@ -251,10 +248,49 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在赛题上，有很多需要将整型数值进行一位一位运算的，或许最笨的办法就是除以100000……，但是在2013年蓝桥杯第二题的一个老师的视频解析里教了这么一种巧妙地办法，所以记录一下</p>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">int2string</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> a)</span> </span>&#123;<span class="comment">//int型转string</span></span><br><span class="line">    <span class="built_in">stringstream</span> ss;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    ss &lt;&lt; a;</span><br><span class="line">    ss &gt;&gt; str;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">string2int</span><span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;<span class="comment">//string型转int</span></span><br><span class="line">    <span class="built_in">stringstream</span> ss;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    ss &lt;&lt; str;</span><br><span class="line">    ss &gt;&gt; a;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>感觉这一串代码就像英语作文反问一样的万能句型，背下背下~</p>
+        <ul>
+<li><p>2019年11月10日17：15分，我还在学校的图书馆四楼，旁边的同学们好多都去吃饭了，我咕噜咕噜地灌着水，等待着6点钟，错过高峰期吃饭，然后回宿舍洗澡，买上零食坐到电脑前准备观看一年一度的英雄联盟S赛的最重要的BO5。</p>
+<a id="more"></a>
+</li>
+<li><p>回顾自己这么多年来对这个游戏的热爱，或许他让我迷失过，使我沉迷过，但是我从未后悔，这个我唯一热爱的游戏。或者说，现在的它对于我来说不仅仅是游戏。</p>
+</li>
+<li><p>初二到大三，整整八年，从一个懵懂的少年，到现在对未来的担忧和向往的青年（青年，少年是这么用的么？0.0）现在渐渐的，早已没有时间和心思去玩了，但是久不久的和高中同学一起开黑，那种无法控制，发自内心的开怀大笑，互相讥讽，那种0-10了也要喊破喉咙说XXX你真是个垃圾。</p>
+</li>
+<li><p>回顾一下自己这八年吧，从刚刚开始我是真的玩个寒冰射手，新手训练营都过不了，到在自己的小圈子里算是个玩ADC的大神（艾欧尼亚钻石，emm好像就大一打上去了，但是我也要吹）。或许这就是成长吧。纪念一下自己。</p>
+</li>
+<li><img src="/2019/11/10/S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0/1.png" alt="1" style="zoom:25%;">
+</li>
+<li><p>看着现在的战绩，一年也就几十场，好像它离我越来越远了，这个号还是S4转战艾欧尼亚30块钱买的号嘞，后面莫名其妙地成为了我地主号</p>
+</li>
+<li><p>今天回去把新英雄买了（我也不知道能不能买），我就又继续在全英雄地道路上走着，嘿嘿，还有6w多金币，噢不~，蓝色精粹，能撑多久呢。</p>
+</li>
+<li><p>今天是FPX对阵G2，不得不承认，今天G2真的好强啊，Caps春天来了么，阿P都愿意为他去打下路，想着自己半决赛猜都猜反了，我就要口嗨一句，今天G2必胜（偷偷地想着会不会有红色地冠军皮肤）。</p>
+</li>
+<li><p>Doinb啊，这个男人，从QG到RW到FPX到现在，还记得，去年那个在峡谷的ID“金咕咕想去S8”，打了几年都没进世界赛到了今天自己也没想过能进决赛吧，小凤凰，加油吧。</p>
+</li>
+<li><p>玩ADC，八年LOL，无法避免的一个人就是Uzi，我对Uzi的感慨真的太多太多了，我澡子哥，当时S3的皇族，一举拿下亚军（emmm~），当时还在读初中，互联网消息不连通，没有手机（有没卡0.0，偷偷带去看小说滴），某一天晚自习，学习干部日常给我们班放送了一份报纸，但是那份是被我们班传疯了的报纸，因为，皇族得了亚军。我那天晚上等了好久才等到那份报纸，足足看了三遍，我认为我们开心的不是拿下了亚军，是报纸上能刊登英雄联盟这款游戏，那种被认可的感觉，真的，好幸福。Uzi的故事就是从那时候开始的吧。</p>
+</li>
+<li><p>Uzi，从出道，到S8以前，被拳头官方称为过世界第一ADC，世界上无数个知名的狗吹（ <em>Doublelift</em> 、Rekkles），但是到了去年以前，只拿过一种冠军，全明星表演赛的Solo冠军，到了去年，那是我们狗粉最幸福的一年也是最悲惨的一年。Uzi夺冠了！2018年LPL春季赛冠军，小狗打破了自己的无冠魔咒。对于一个已经是第七年的老将，才拿到自己的第一个冠军，其实我无法想象到他是怎么坚持下来的。紧接而来的是：2018MSI冠军，2018洲际赛冠军，2018年雅加达亚运会表演赛代表中国队夺冠，2018年LPL夏季赛冠军，整个英雄联盟比赛，那一年，只要是小狗能参加的，参加了的，不管国际国内，还是重头戏亚运会，到此，冠军都有Uzi这三个字符。可惜，万万没想S8世界总决赛，到败在了8强G2的手里。那一天后，那种看着Uzi成长了这么多年的我，心里难言的痛，感觉自己的英雄倒了。</p>
+</li>
+<li><p>还记得2018年洲际赛给自己带来的感动，Doinb，那支RW，侠盗救世，那个从未在LCK打过比赛的韩，那几句LPL介绍的“打他蛋，打他蛋，蛋碎了”，仿佛他手上拿着克烈的砍刀，一刀一刀将LPL送入冠军。比赛结束，韩国人把Doinb喷杀了，但是要知道，他一开始就在LPL，他像Rooike一样采访只说中文，因为他是LPL的，他因在LPL而自豪，我们因为他在LPL而感到骄傲。其实女朋友问我，为什么当时才是第4局，RW赢了比最终LPL赢了还要激动。这让我想起来了那支2018年的RNG。还记得休息室“我们给你们打个第五局回来”。当时的RNG是无敌的，在LPL内心中，它是无敌的，是天神，是没有人能打过的，能将比赛拖入第五局交给RNG，在第四局打完，LPL的观众们，就觉得已经赢了，不错所料，赢了。眼泪在眼眶打转，那一届的MSI带给我太大的感动了。<img src="/2019/11/10/S9%E5%89%8D%E5%A4%95%E5%B0%8F%E8%AE%B0/2.png" alt="2"></p>
+</li>
+<li><p>英雄联盟带给我的不仅仅是游戏，更多的是感动，是坚持，是不放弃，是团队合作迸发出来的强大，或许，过了这一年，我对于英雄联盟的关注，会更少更少，但是它教会了我：</p>
+<ul>
+<li>“断剑重铸之日，骑士归来之时。” ——锐雯</li>
+<li>“ 要记住我们为何而战。” ——艾瑞莉娅</li>
+<li>“我命由我，不由天。”——亚索</li>
+<li>“  我曾踏足山巅，也曾跌入低谷，二者都让我受益良多。 ”——塔里克</li>
+<li>“ 时间，不在于你拥有多少，而在于你怎样使用。 ”——艾克</li>
+<li>“ 真正的大师永远都怀着一颗学徒的心 。”——易</li>
+</ul>
+</li>
+<li><p>还是要偷偷的说：FPX，今晚加油！等一场金色的雨，等六个火红的皮肤，等一个“唐小幽的真眼”</p>
+</li>
+<li><p>我爱英雄联盟，我热联盟，I Love League of Legends，I‘m a LOLer.</p>
+</li>
+<li><p>然后，再见，锐雯，再见，卡莎，再见英雄联盟。</p>
+</li>
+</ul>
 
     </div>
 
@@ -264,26 +300,22 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C-C/" rel="tag"># C/C++</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
-              <a href="/tags/%E8%93%9D%E6%A1%A5%E6%9D%AF/" rel="tag"># 蓝桥杯</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag"># 游戏</a>
+              <a href="/tags/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F/" rel="tag"># 英雄联盟</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2018/12/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B8%E4%BE%8B/" rel="next" title="数据结构的几个典例">
-                  <i class="fa fa-chevron-left"></i> 数据结构的几个典例
+                <a href="/2019/11/10/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" rel="next" title="词法分析器">
+                  <i class="fa fa-chevron-left"></i> 词法分析器
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/03/16/C-C-%E4%B8%AD%E7%9A%84%E5%B0%8F%E7%BB%86%E8%8A%82/" rel="prev" title="C/C++中的小细节">
-                  C/C++中的小细节 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -322,7 +354,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
